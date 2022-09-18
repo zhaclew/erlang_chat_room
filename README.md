@@ -14,10 +14,28 @@
 
 二、编译文件 + 服务端开启
 
-![1663499877716](image/README/1663499877716.png)
+```
+% 这是第一个黑窗口或者终端
+1> c(server).
+2> c(client).
+3> server:start(). % 期望返回 -> {ok,端口号}
+```
 
-三、客户端开启，可以开启多个客户端
+三、客户端开启，可以开启多个客户端 or 黑窗口
 
-![1663500517414](image/README/1663500517414.png)
+```
+% 这是第二个黑窗口或者终端
+1> client:start().
+2> client:create_chanel(aaa). 
+3> client:join_channel(aaa).
+4> client:talk(aaa, hello).
+```
 
-![1663500334520](image/README/1663500334520.png)
+```
+% 这是第三个黑窗口或者终端
+1> client:start().  
+2> client:join_channel(aaa).
+3> client:talk(aaa, no_hello).
+```
+
+当然，你可以把上面的全部命令写在同一个终端 or 黑窗口也是没问题的
