@@ -1,0 +1,2 @@
+# erlang_chat_room
+个人练习，该项目是使用gen_server行为搭建的多人聊天系统
