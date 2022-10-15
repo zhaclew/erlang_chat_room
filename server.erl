@@ -4,9 +4,8 @@
 -define(SERVER, ?MODULE).
 
 % API
--export([start/0]).
--export([init/1, handle_call/3, handle_cast/2]).
-
+-export([start/0, get_data/0]).
+-export([init/1, handle_call/3, handle_cast/2, handle_info/2]).
 
 start() ->
     gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
@@ -122,5 +121,20 @@ sendStr(Socket, Str) ->
 handle_call(_Request, _From, State) ->
     {reply, ok, State}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%   下面这块是讲与 player 进程交互的   %%%%%%
+
+%  server端向player端发送了一个异步请求,这个请求的Msg是叫get
+get_data()-> 
+    gen_server:cast(player, get).
+
+%  server 端从信箱里拿到 Msg 为 {hello, _Date} 的邮件
+handle_cast({hello, Date}, State) ->
+    % server端决定把异步接收到的数据打印出来
+    io:format("is my get Data ~p~n", [Date]),
+    {noreply, State};
 handle_cast(_Msg, State) ->
+    {noreply, State}.
+
+handle_info(_Info, State) ->
     {noreply, State}.
